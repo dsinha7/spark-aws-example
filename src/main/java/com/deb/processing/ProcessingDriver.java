@@ -50,6 +50,10 @@ public class ProcessingDriver {
 
         processor.saveToDB(transformedData);
 
+        System.out.println("================================================");
+        System.out.println("              JOB COMPLETED SUCCESSFULLY"        );
+        System.out.println("================================================");
+
         spark.stop();
 
     }
