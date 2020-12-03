@@ -19,13 +19,15 @@ public class CreditProcessingTest {
         spark = SparkSession
                 .builder().master("local[*]")
                 .getOrCreate();
-        processor = new CreditProcessor("/Users/dsinha/Downloads/data-engineering-challenge/peerIQData.csv");
+        //use the local config file with corect parameters
+        String testConfigFile = System.getProperty("user.dir") + "/config/config_local.properties";
+        processor = new CreditProcessor(testConfigFile);
         data = processor.readCSVLocalFile(spark);
     }
     @Test
     public void readFile() {
-        long count = processor.filterByStatusAndPurpose(data).count();
-        Assert.assertEquals(24, count);
+        long count = processor.readCSVLocalFile(spark).count();
+        Assert.assertEquals(31, count);
     }
     @Test
     public void recordCountTestAfterFilter1() {
