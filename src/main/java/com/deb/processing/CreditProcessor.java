@@ -65,14 +65,22 @@ public class CreditProcessor {
 
     public void saveToDB(Dataset<Row> dataset){
 
+        String host = config.getConfigValue("jdbc.host");
+        String table = config.getConfigValue("jdbc.dbtable");
+        String user = config.getConfigValue("jdbc.user");
+        String pass = config.getConfigValue("jdbc.password");
+
+        System.out.printf("connecting to database using [%s] [%s] [%s] [****]%n", host, table, user);
+
+
         dataset.write().format("jdbc")
                 .option("driver", "org.postgresql.Driver")
-                .option("url", "jdbc:postgresql://database-1.cm52utzmehtn.us-east-2.rds.amazonaws.com/")
-                .option("dbtable", "credit_log")
-                .option("user", "postgres")
-                .option("password", "postgres")
-                //.option("createTableOptions", "PRIMARY KEY (id)")
+                .option("url", "jdbc:postgresql://" + host)
+                .option("dbtable", table)
+                .option("user", user)
+                .option("password", pass)
                 .mode(SaveMode.Append).save();
+
 
     }
 
